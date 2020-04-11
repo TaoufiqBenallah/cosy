@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<data>
+    <variable
+        name="contract"
+        type="com.example.cosysimulation.models.ContractModel" />
+</data>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COSY"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                />
+            <Button
+                android:id="@+id/backToList"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="LIST"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                ></Button>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="44dp"
+            android:layout_margin="20dp"
+            >
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+                    <LinearLayout
+                        android:padding="10dp"
+
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+                        xmlns:tools="http://schemas.android.com/tools"
+
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+
+
+                        <TextView android:text="Champ One : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                        </TextView>
+
+                        <TextView android:text="oK "  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:padding="10dp"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                            <TextView android:text="Champ Two : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            </TextView>
+
+                            <TextView android:text="@{contract.champOne}"  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+
+                            android:padding="10dp"
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <TextView android:text="Champ Three : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            </TextView>
+
+                            <TextView android:text="oK "  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            </TextView>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="1dp"
+                android:padding="10dp"
+                tools:layout_editor_absoluteY="44dp"
+                android:layout_margin="20dp">
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    >
+                    <LinearLayout
+                        android:padding="10dp"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <TextView android:text="Champ One : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                        </TextView>
+
+                        <TextView android:text="oK "  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                        </TextView>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminate="true"
+        />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminate="true"
+            android:text="Error."
+            android:textSize="30sp"
+            android:textColor="@android:color/holo_red_dark"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+</layout>

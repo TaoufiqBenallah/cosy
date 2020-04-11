@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COSY"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                />
+            <Button android:id="@+id/backToListFromNew" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="LIST" android:layout_alignParentRight="true" android:layout_marginRight="15dp"></Button>
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical"
+    >
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Contract"
+            android:textSize="22sp"
+            >
+        </TextView>
+        <EditText
+            android:id="@+id/champOne"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Champ One"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/champTwo"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Champ Two"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/champThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Champ Three"
+            android:inputType="number"
+            android:textSize="20sp">
+
+        </EditText>
+
+        <TextView
+            android:id="@+id/addSuccess"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Success, Contract added, check your list now."
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_green_dark"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/addError"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Error!"
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_red_dark"
+            >
+        </TextView>
+        <Button android:layout_width="wrap_content"
+            android:id="@+id/addSubmit"
+            android:layout_marginTop="10dp" android:textSize="18sp"  android:layout_height="wrap_content" android:text="SAVE">
+        </Button>
+        <ProgressBar
+            android:id="@+id/addLoading"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/addNoAcess"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You don't the right to add a contract, only a VENDEUR can do this."
+            android:textSize="20sp"
+            >
+        </TextView>
+
+    </LinearLayout>
+</LinearLayout>
