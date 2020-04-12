@@ -10,10 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.cosysimulation.adapters.ContractListAdapter;
 import com.example.cosysimulation.databinding.ActivityMainBinding;
-import com.example.cosysimulation.models.ContractModel;
 import com.example.cosysimulation.viewsmodels.ContractsListViewModel;
 
 import butterknife.BindView;
@@ -29,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.newContractBtn)
     Button newContractBtn;
 
+    @BindView(R.id.listLoading)
+    ProgressBar listLoading;
+
+    @BindView(R.id.listError)
+    TextView listError;
+
+
     RecyclerView.Adapter adapter;
 
     @Override
@@ -38,17 +46,35 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding main = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         ButterKnife.bind(this);
-        contractList.setLayoutManager(new LinearLayoutManager(this));
 
-        ContractModel model1 = new ContractModel(1, "GHH", "f");
-        ContractModel model2 = new ContractModel(2, "hhj", "f");
+        main.contractList.setLayoutManager(new LinearLayoutManager(this));
 
         contractsListViewModel = ViewModelProviders.of(this).get(ContractsListViewModel.class);
         contractsListViewModel.call();
 
         contractsListViewModel.contractList.observe(this,contractModels -> {
-            adapter = new ContractListAdapter(MainActivity.this, contractModels);
-            contractList.setAdapter(adapter);
+            if(contractModels != null){
+
+                contractList.setVisibility((View.VISIBLE));
+                adapter = new ContractListAdapter(MainActivity.this, contractModels);
+                main.contractList.setAdapter(adapter);
+            }
+        });
+
+        contractsListViewModel.isLoading.observe(this,isLoading -> {
+            if(isLoading != null){
+                listLoading.setVisibility(isLoading ? View.VISIBLE : View.GONE );
+                if(isLoading){
+                    listError.setVisibility(View.GONE);
+                    contractList.setVisibility((View.GONE));
+                }
+            }
+        });
+
+        contractsListViewModel.error.observe(this,Error -> {
+            if(Error != null){
+                listError.setVisibility(Error ? View.VISIBLE : View.GONE );
+            }
         });
 
         newContractBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,5 +85,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        contractsListViewModel = ViewModelProviders.of(this).get(ContractsListViewModel.class);
+        contractsListViewModel.call();
     }
 }

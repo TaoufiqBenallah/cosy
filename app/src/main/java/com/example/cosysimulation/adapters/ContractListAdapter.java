@@ -12,10 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cosysimulation.ContractActivity;
 import com.example.cosysimulation.R;
+import com.example.cosysimulation.databinding.ContratBinding;
 import com.example.cosysimulation.models.ContractModel;
 import com.example.cosysimulation.viewsmodels.ContractViewModel;
 
@@ -36,13 +38,13 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
     @NonNull
     @Override
     public ContractViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contrat, parent, false);
-        return new ContractViewHolder(view);
+        ContratBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.contrat, parent, false); // ContratBinding >> as your list item layout named "contrat"
+        return new ContractViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContractViewHolder holder, int position) {
-        holder.bind(contracts.get(position));
+        holder.binding.setContract(contracts.get(position));
     }
 
     @Override
@@ -58,12 +60,15 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
         @BindView(R.id.delete)
         Button deleteButton;
 
+        ContratBinding binding;
+
 
         @BindView(R.id.contratImage)
         ImageView contractImage;
 
-        public ContractViewHolder(@NonNull View itemView){
-            super(itemView);
+        public ContractViewHolder(@NonNull ContratBinding binding){
+            super(binding.getRoot());
+            this.binding = binding;
             ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(this);
@@ -73,9 +78,9 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
             contractImage.setOnClickListener(this);
         }
 
-        public void bind(ContractModel contractModel){
+        /*public void bind(ContractModel contractModel){
             courtier.setText(contractModel.getCourtier());
-        }
+        }*/
 
         @Override
         public void onClick(View v) {

@@ -56,6 +56,7 @@
         >
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/vendeurcard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="1dp"
@@ -86,7 +87,7 @@
                         <TextView android:text="Champ One : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
                         </TextView>
 
-                        <TextView android:text="oK "  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                        <TextView android:text="@{contract.champOne}"  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
                         </TextView>
                     </LinearLayout>
 
@@ -104,7 +105,7 @@
                             <TextView android:text="Champ Two : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
                             </TextView>
 
-                            <TextView android:text="@{contract.champOne}"  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <TextView android:text="@{contract.champTwo}"  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
                             </TextView>
                         </LinearLayout>
 
@@ -122,7 +123,7 @@
                             <TextView android:text="Champ Three : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
                             </TextView>
 
-                            <TextView android:text="oK "  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                            <TextView android:text="@{Integer.toString(contract.champThree)}"  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
                             </TextView>
                         </LinearLayout>
 
@@ -130,6 +131,7 @@
 
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:id="@+id/courtiercard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:layout_editor_absoluteX="1dp"
@@ -153,10 +155,10 @@
                         android:orientation="horizontal">
 
 
-                        <TextView android:text="Champ One : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                        <TextView android:text="Courtier : " android:textSize="18sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content">
                         </TextView>
 
-                        <TextView android:text="oK "  android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                        <TextView android:text="@{contract.courtier}" android:textSize="18sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
                         </TextView>
                     </LinearLayout>
 
@@ -170,7 +172,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ProgressBar
-        android:id="@+id/progressBar1"
+        android:id="@+id/detailsLoading"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -186,6 +188,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/detailsError"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

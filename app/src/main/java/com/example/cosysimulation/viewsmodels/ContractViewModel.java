@@ -1,43 +1,70 @@
 package com.example.cosysimulation.viewsmodels;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
+import com.example.cosysimulation.api.SingleContractRequest;
+import com.example.cosysimulation.di.DaggerContractApiComponent;
 import com.example.cosysimulation.models.ContractModel;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class ContractViewModel {
-
-    MutableLiveData<ContractModel> contract;
-    MutableLiveData<Boolean> isLoading;
-    MutableLiveData<Boolean> error;
+import com.example.cosysimulation.services.ContractService;
 
 
+import javax.inject.Inject;
 
-    public void call(){
-        fetchContract();
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
+public class ContractViewModel extends ViewModel {
+
+    public MutableLiveData<ContractModel> contract = new MutableLiveData<ContractModel>();
+    public MutableLiveData<Boolean> isLoading = new MutableLiveData<Boolean>();
+    public MutableLiveData<Boolean> error = new MutableLiveData<Boolean>();
+
+    @Inject
+    ContractService contractService;
+
+    CompositeDisposable disposable = new CompositeDisposable();
+
+    public ContractViewModel(){
+        DaggerContractApiComponent.create().inject(this);
     }
 
-    public void fetchContract(){
-        ContractModel contractModel = new ContractModel(1, "h", "hf", 1, "h", "h");
+    public void call(SingleContractRequest singleContractRequest){
+        fetchContract(singleContractRequest);
+    }
 
-        ContractModel contractModel0 = new ContractModel(1, "Item 1", "h");
-        ContractModel contractModel1 = new ContractModel(1, "Item 2", "h");
-        ContractModel contractModel2 = new ContractModel(1, "Item 3", "j");
-        ContractModel contractModel3 = new ContractModel(1, "Item 4", "h");
+    public void fetchContract(SingleContractRequest singleContractRequest){
 
-        List<ContractModel> list = new ArrayList<ContractModel>();
+        isLoading.setValue(true);
 
-        list.add(contractModel0);
+        disposable.add(
+                contractService.getContract(singleContractRequest)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<ContractModel>() {
 
-        list.add(contractModel1);
+                            @Override
+                            public void onSuccess(ContractModel contractModel) {
+                                isLoading.setValue(false);
+                                error.setValue(false);
+                                contract.setValue(contractModel);
+                            }
 
-        list.add(contractModel2);
+                            @Override
+                            public void onError(Throwable e) {
+                                error.setValue(true);
+                                isLoading.setValue(false);
+                                e.printStackTrace();
+                            }
+                        })
+        );
+    }
 
-        list.add(contractModel3);
-
-
-        contract.setValue(contractModel);
+    @Override
+    protected void onCleared(){
+        super.onCleared();
+        disposable.clear();
     }
 }

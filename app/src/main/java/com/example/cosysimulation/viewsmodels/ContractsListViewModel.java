@@ -3,15 +3,34 @@ package com.example.cosysimulation.viewsmodels;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.cosysimulation.di.DaggerContractApiComponent;
 import com.example.cosysimulation.models.ContractModel;
+import com.example.cosysimulation.services.ContractService;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class ContractsListViewModel extends ViewModel {
+
     public MutableLiveData<List<ContractModel>> contractList = new MutableLiveData<List<ContractModel>>();
-    MutableLiveData<Boolean> isLoading;
-    MutableLiveData<Boolean> error;
+    public MutableLiveData<Boolean> isLoading = new MutableLiveData<Boolean>();
+    public MutableLiveData<Boolean> error = new MutableLiveData<Boolean>();;
+
+    @Inject
+    ContractService contractService;
+
+    CompositeDisposable disposable = new CompositeDisposable();
+
+    public ContractsListViewModel(){
+        super();
+        DaggerContractApiComponent.create().inject(this);
+    }
 
     public void call(){
         fetchContracts();
@@ -19,25 +38,37 @@ public class ContractsListViewModel extends ViewModel {
 
     public void fetchContracts(){
 
-        ContractModel contractModel = new ContractModel(2, "Item 1", "h");
-        ContractModel contractModel1 = new ContractModel(11, "Item 2", "h");
-        ContractModel contractModel2 = new ContractModel(82, "Item 3", "j");
-        ContractModel contractModel3 = new ContractModel(575, "Item 4", "h");
+        isLoading.setValue(true);
 
-        List<ContractModel> list = new ArrayList<ContractModel>();
+        disposable.add(
+                contractService.getContracts()
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<List<ContractModel>>() {
 
-        list.add(contractModel);
+                            @Override
+                            public void onSuccess(List<ContractModel> friendsModels) {
+                                isLoading.setValue(false);
+                                error.setValue(false);
+                                contractList.setValue(friendsModels);
+                            }
 
-        list.add(contractModel1);
-
-        list.add(contractModel2);
-
-        list.add(contractModel3);
-
-        contractList.setValue(list);
+                            @Override
+                            public void onError(Throwable e) {
+                                error.setValue(true);
+                                isLoading.setValue(false);
+                                e.printStackTrace();
+                            }
+                        })
+        );
 
     }
 
+    @Override
+    protected void onCleared(){
+        super.onCleared();
+        disposable.clear();
+    }
 
 
 }
