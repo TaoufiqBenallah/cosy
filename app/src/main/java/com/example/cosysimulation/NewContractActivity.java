@@ -131,7 +131,7 @@ public class NewContractActivity extends AppCompatActivity {
                 String champTwoValue = champTwo.getText().toString();
                 int champThreeValue = Integer.parseInt(champThree.getText().toString());
 
-                ContractModel contractModel = new ContractModel(1, champOneValue, champTwoValue, champThreeValue, champOneValue + " AUTOMATISE", "URLHERE");
+                ContractModel contractModel = new ContractModel(1, champOneValue, champTwoValue, champThreeValue, "Courtier "+champThreeValue, "URLHERE");
 
                 newContractViewModel.call(contractModel);
             }

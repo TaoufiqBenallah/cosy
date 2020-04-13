@@ -13,13 +13,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cosysimulation.ContractActivity;
+import com.example.cosysimulation.CrudListener;
 import com.example.cosysimulation.R;
 import com.example.cosysimulation.databinding.ContratBinding;
 import com.example.cosysimulation.models.ContractModel;
 import com.example.cosysimulation.viewsmodels.ContractViewModel;
+import com.example.cosysimulation.viewsmodels.ContractsListViewModel;
 
 import java.util.List;
 
@@ -30,9 +33,12 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
 
     List<ContractModel> contracts;
     Context context;
-    public ContractListAdapter(Context context, List<ContractModel> contracts){
+    OnButtonPressed onButtonPressed;
+
+    public ContractListAdapter(Context context, List<ContractModel> contracts, OnButtonPressed onButtonPressed){
         this.context = context;
         this.contracts = contracts;
+        this.onButtonPressed = onButtonPressed;
     }
 
     @NonNull
@@ -54,6 +60,8 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
 
     public class ContractViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+        ContractsListViewModel listViewModel;
+
         @BindView(R.id.courtier)
         TextView courtier;
 
@@ -61,7 +69,6 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
         Button deleteButton;
 
         ContratBinding binding;
-
 
         @BindView(R.id.contratImage)
         ImageView contractImage;
@@ -78,10 +85,6 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
             contractImage.setOnClickListener(this);
         }
 
-        /*public void bind(ContractModel contractModel){
-            courtier.setText(contractModel.getCourtier());
-        }*/
-
         @Override
         public void onClick(View v) {
 
@@ -89,7 +92,8 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
             int idOfContract = contracts.get(position).getId();
 
             if(deleteButton.getId() == v.getId()){
-                Toast.makeText(context, "DELETE THIS " + idOfContract, Toast.LENGTH_LONG).show();
+                // action here
+                onButtonPressed.onClicked(idOfContract);
             }
             else {
                 Intent myIntent = new Intent(context, ContractActivity.class);
@@ -97,5 +101,9 @@ public class ContractListAdapter extends RecyclerView.Adapter<ContractListAdapte
                 context.startActivity(myIntent);
             }
         }
+    }
+
+    public interface OnButtonPressed {
+        void onClicked(int position);
     }
 }

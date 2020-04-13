@@ -44,6 +44,7 @@ public class ContractActivity extends AppCompatActivity {
     @BindView(R.id.vendeurcard)
     CardView vendeurCard;
 
+    String role;
 
 
     @Override
@@ -69,20 +70,43 @@ public class ContractActivity extends AppCompatActivity {
         contractViewModel = ViewModelProviders.of(this).get(ContractViewModel.class);
         contractViewModel.call(singleRequest);
 
-        contractViewModel.contract.observe(this,contractModel -> {
-            if(contractModel != null){
-                dataBinding.setContract(contractModel);
-                vendeurCard.setVisibility(View.VISIBLE);
-                courtierCard.setVisibility(View.VISIBLE);
-                detailsLoading.setVisibility(View.GONE);
-                detailsError.setVisibility(View.GONE);
-            }
+        contractViewModel.newModelView.observe(this,newModel -> {
 
+
+            if(newModel != null){
+
+                Log.d("TAG", "newModel " + newModel.getUserConnected().getRole() + "" + (newModel.getUserConnected().getRole().equals("VENDEUR")));
+                if(newModel.getUserConnected().getRole().equals("VENDEUR")){
+                    vendeurCard.setVisibility(View.VISIBLE);
+                    courtierCard.setVisibility(View.VISIBLE);
+                    detailsLoading.setVisibility(View.GONE);
+                    detailsError.setVisibility(View.GONE);
+                    if(newModel.getContractModel() != null) {
+                        dataBinding.setContract(newModel.getContractModel());
+                    }
+
+
+                }else if(newModel.getUserConnected().getRole().equals("COURTIER")){
+                    vendeurCard.setVisibility(View.GONE);
+                    courtierCard.setVisibility(View.VISIBLE);
+                    detailsLoading.setVisibility(View.GONE);
+                    detailsError.setVisibility(View.GONE);
+                    if(newModel.getContractModel() != null) {
+                        dataBinding.setContract(newModel.getContractModel());
+                    }
+
+                }else {
+                    vendeurCard.setVisibility(View.GONE);
+                    courtierCard.setVisibility(View.VISIBLE);
+                    detailsLoading.setVisibility(View.GONE);
+                    detailsError.setVisibility(View.GONE);
+                }
+            }
         });
 
         contractViewModel.isLoading.observe(this,isLoading -> {
-
-            if(isLoading != null){
+            Log.d("TAG", "loading");
+            if(isLoading != null && isLoading){
                 vendeurCard.setVisibility(View.GONE);
                 courtierCard.setVisibility(View.GONE);
                 detailsLoading.setVisibility(View.VISIBLE);
@@ -92,7 +116,9 @@ public class ContractActivity extends AppCompatActivity {
         });
 
         contractViewModel.error.observe(this,Error -> {
-            if(Error != null){
+            Log.d("TAG", "erroR");
+            if(Error != null && Error){
+
                 vendeurCard.setVisibility(View.GONE);
                 courtierCard.setVisibility(View.GONE);
                 detailsLoading.setVisibility(View.GONE);

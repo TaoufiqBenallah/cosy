@@ -54,9 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
         contractsListViewModel.contractList.observe(this,contractModels -> {
             if(contractModels != null){
-
                 contractList.setVisibility((View.VISIBLE));
-                adapter = new ContractListAdapter(MainActivity.this, contractModels);
+                adapter = new ContractListAdapter(MainActivity.this, contractModels, new ContractListAdapter.OnButtonPressed() {
+                    @Override
+                    public void onClicked(int position) {
+                        contractsListViewModel.deleteContract(position);
+                    }
+                });
                 main.contractList.setAdapter(adapter);
             }
         });
@@ -94,4 +98,5 @@ public class MainActivity extends AppCompatActivity {
         contractsListViewModel = ViewModelProviders.of(this).get(ContractsListViewModel.class);
         contractsListViewModel.call();
     }
+
 }

@@ -3,6 +3,7 @@ package com.example.cosysimulation.viewsmodels;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.cosysimulation.api.SingleContractRequest;
 import com.example.cosysimulation.di.DaggerContractApiComponent;
 import com.example.cosysimulation.models.ContractModel;
 import com.example.cosysimulation.services.ContractService;
@@ -36,6 +37,7 @@ public class ContractsListViewModel extends ViewModel {
         fetchContracts();
     }
 
+
     public void fetchContracts(){
 
         isLoading.setValue(true);
@@ -62,6 +64,36 @@ public class ContractsListViewModel extends ViewModel {
                         })
         );
 
+    }
+
+    public void deleteContract(int position){
+
+        isLoading.setValue(true);
+
+        SingleContractRequest request = new SingleContractRequest("WHATEVER NOW", position + "");
+
+        disposable.add(
+                contractService.deleteContract(request)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<String>() {
+
+                            @Override
+                            public void onSuccess(String response) {
+                                call();
+                                isLoading.setValue(false);
+                                error.setValue(false);
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                error.setValue(true);
+                                isLoading.setValue(false);
+                                e.printStackTrace();
+                            }
+                        })
+        );
     }
 
     @Override

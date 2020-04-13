@@ -1,6 +1,7 @@
 package com.example.cosysimulation.api;
 
 import com.example.cosysimulation.models.ContractModel;
+import com.example.cosysimulation.models.NewModel;
 
 import java.util.List;
 
@@ -17,10 +18,15 @@ public interface ContractApi {
 
     @Headers("Content-Type: application/json")
     @POST("contrat.php")
-    Single<ContractModel> getContract(@Body SingleContractRequest body);
+    Single<NewModel> getContract(@Body SingleContractRequest body);
 
     @Headers("Content-Type: application/json")
     @POST("addContrat.php")
     Single<String> newContract(@Body ContractModel body);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("deleteContrat.php")
+    Single<String> deleteContract(@Body SingleContractRequest body);
 
 }

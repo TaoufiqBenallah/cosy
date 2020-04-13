@@ -4,6 +4,7 @@ import com.example.cosysimulation.api.ContractApi;
 import com.example.cosysimulation.api.SingleContractRequest;
 import com.example.cosysimulation.di.DaggerContractApiComponent;
 import com.example.cosysimulation.models.ContractModel;
+import com.example.cosysimulation.models.NewModel;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ContractService {
         return instance;
     }
 
-    public Single<ContractModel> getContract(SingleContractRequest request) {
+    public Single<NewModel> getContract(SingleContractRequest request) {
         return api.getContract(request);
     }
 
@@ -37,7 +38,12 @@ public class ContractService {
         return api.newContract(contractModel);
     }
 
+    public Single<String> deleteContract(SingleContractRequest request) {
+        return api.deleteContract(request);
+    }
+
     public Single<List<ContractModel>> getContracts(){
         return api.getContractList();
     }
+
 }
