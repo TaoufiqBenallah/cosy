@@ -1,31 +1,32 @@
-PT 022022 SME Digital Advisory Tool AWS
-Finding description: Affected services: EC2
+FROM docker.artifacts.rbi.tech/merlin-docker-base/merlin-docker-base-node:12.RELEASE
 
-Based on the results from Orca Security tool and AWS Inspector, we identified several issues related to EC2 instances in the AWS account. These instances are vulnerable to the following publicly known security vulnerabilities:
+ENV GROUP=rbi-group \
+    USER=rbi-user
 
-CVE-2019-15657 - Critical
-CVE-2020-28502 - High
-CVE-2020-7660 - High
-CVE-2021-25741 - High
-CVE-2021-22945 - High
-CVE-2021-22946 - High
-CVE-2021-22947 - Medium
-CVE-2021-3778 - High
-CVE-2021-3796 - High
-CVE-2021-3872 - High
-CVE-2021-3875 - Medium
-CVE-2021-3968 - High
-CVE-2021-3973 - High
-CVE-2021-3974 - High
-CVE-2021-43527 - High
+USER root
 
-We have also identified two end of support container images:
+WORKDIR /usr/app
 
-datawire/aes - OS Alpine 3.12.8
-merlin-k8s-mesh-grafana - OS Alpine 3.12.0
+COPY ./client/ ./client
 
-The installed operating system Alpine 3.12.x is about to reach end of support in less than 90 days, starting 01 May 2022. This means that there will be no security fixes for this OS.
+COPY ["server/package.json", "server/package-lock.json", "server/tsconfig.build.json", "server/tsconfig.json", "./"]
+COPY ./server/src ./src
 
-However, we could not verify any of these issues because we do not have access to the EC2 instances or Kubernetes cluster.;
-Severity: High;
-Treatment description: We recommend to always use latest stable version of every dependency and patch publicly known security vulnerabilities. Inspect all ECR images and EC2 instances in the account and verify that they are not vulnerable to the publicly known security vulnerabilities listed above.
+RUN mkdir ./public
+
+RUN cd client/ \
+    && npm install \
+    && npm run buildDocker
+
+RUN rm -r ./client  \
+    && npm install --only=production \
+    && npm run build \
+    && groupadd -g 1001 ${GROUP} \
+    && useradd -u 1001 ${USER} -g ${GROUP} \
+    && chown -R ${USER}:${GROUP} /usr/app/
+
+USER ${USER}:${GROUP}
+
+EXPOSE 3000
+
+CMD [ "node", "./dist/main.js" ]
