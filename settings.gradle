@@ -1,7 +1,20 @@
-Hello Edris AHMADY,
-
-I have checked the project, it seems like the Docker file uses a base image that is in RBI servers, we can't control or make edits in this file.
-
-The rest of the file just copies the projects folders into the image and nothing seems to be related the versions having issues mentionned above.
-
-I don't see how this can be fixed with development.
+ACCOUNT_ID=510003372
+CLIENT_ID=crb2bm0caw2g4ujo5gkcilaf
+CLIENT_SECRET=5yDDec8miXC4xuWS5UlH3Hhu
+CONCURRENT_REQUESTS=
+DESCRIPTION=
+IP_CHECK_DISABLED=
+JWT=T53vW9sKtGm_m3X9mwL14AhDwNh8U_RXtamI08F5mNVrVlvSYDL7DkUe9lESZG33yA7ie-pkBJ_HQVNIL4cwEqT_b1N-jj6PSNYIk82fvwo7FvpkFELzlyAxeYiUvyTi_QIt-xw_hlLS1HVe-D2BUKsQDVymRTrchy58MpzFdptAmORH-XNEKj8sGDgXKhia0idZwbu4vGn5zzzWhKo8R2jsro0L1XjRdlTs-IlXGrM6LrzdY3bAXVQfcRwv2A2
+JWT_CUSTOMER_KEY=
+JWT_PSWD=
+OFFER_TYPES_DE=E093EE87-0C63-4168-8A14-38CF4BC4ED71
+PRODUCT_TYPES_DE=E704AB1A-7BAF-4A93-8CC9-1EFAA3DE8DBD
+RETRY_COUNT=
+RETRY_DELAY=
+SEND_LOG_DE=167E3540-2C19-4748-BBB0-B7E372D3D714
+SFMC_SUBDOMAIN=mcgxznpctbrgw15m04wk76cmsg18
+STACK=50
+STS_CLIENT_ID=1wf9r3c3m5kzqtfoobhwkkpi
+STS_CLIENT_SECRET=1TwPApmsSv0CLvXY4LGx5bvH
+TIMEOUT=
+DOMAIN=https://enrichment-day.herokuapp.com
